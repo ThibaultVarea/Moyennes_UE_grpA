@@ -1,0 +1,22 @@
+### -----
+def calculUE():
+    moy = 0     # On initialise une variable "moy" (pour moyenne) à 0
+    note = 0     # On initialise une variable "note" (pour note) à 0
+    coef = 0     # On initialise une variable "coef" (pour coefficient) à 0
+    compteur = 0     # On initialise une variable "compteur" (pour compteur) à 0, qui va servir de dénominateur 
+    for i in range(101,116):     # Pour chaque ressource, de 101 à 115 (101 à 116 exclu)
+        compteur += 1     # On incrémente au compteur
+        note = float(input(f"Saisissez votre note de R{i}: "))     # On demande à l'utilisateur de saisir sa note de ressource no i
+        coef = int(input(f"Saisissez le coefficient de cette note (0 si la note n'existe pas): "))     # On demande à l'utilisateur de saisir le coefficient de la note
+        compteur += coef-1     # On ajoute coef-1 au compteur
+        moy += note*coef     # On rajoute à moy le produit de la note et du coefficient
+        
+    for i in range(11, 17):     # Pour chaque SAE, de 11 à 16 (11 à 17 exclu)
+        compteur += 1     # On incrémente au compteur
+        note = float(input(f"Saisissez votre note de SAE{i}: "))     # On demande à l'utilisateur de saisir sa note de SAE no i
+        coef = int(input(f"Saisissez le coefficient de cette note (0 si la note n'existe pas): "))     # On demande à l'utilisateur de saisir le coefficient de la note
+        compteur += coef-1     # On ajoute coef-1 au compteur
+        moy += note*coef     # On rajoute à moy le produit de la note et du coefficient
+    moy = moy/compteur     # On Divise la somme totale des coefficients * notes par le nombre total de notes
+    print(f"Votre moyenne est de {moy}")     # On affiche la moyenne de l'utilisateur
+calculUE()
