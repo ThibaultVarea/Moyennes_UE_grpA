@@ -1,38 +1,41 @@
 ### -----
-import numpy as np
-
+### Attention: ce code assume qu'il y a autant de coefficients que de notes, sinon le code ne fonctionne pas
 def calculUE():
-    #Liste des matieres
-    matiere = [f"R{i}" for i in range(101, 104)] + [f"SAE{j}" for j in range(11, 12)]
+    #Liste des matières
+    matiere = [f"R{i}" for i in range(101, 116)] + [f"SAE{j}" for j in range(11, 17)]
     note = [float(input(f"Quelle est la note pour {elt} ?")) for elt in matiere]
-    
-    #Liste des coefficients
-    coef1 = [10,10,7,7,0,5,0,6,0,5,4,2,5,5,0,20,20,0,0,0,7]
-    coef2 = [4,0,2,8,6,0,0,0,0,5,5,2,9,9,3,0,0,29,0,0,7]
-    coef3 = [4,0,2,0,0,5,15,6,4,5,5,2,0,0,3,0,0,0,20,20,7]
-    
-    moys = []     #Initialisation d'une liste vide
+
+    #Dictionnaires note:coefficient
+    coef1 = {note[i]:coef for i, coef in enumerate([10,10,7,7,0,5,0,6,0,5,4,2,5,5,0,20,20,0,0,0,7])}     #On utilise enumerate et on y met directement les coefficients
+    coef2 = {note[i]:coef for i, coef in enumerate([4,0,2,8,6,0,0,0,0,5,5,2,9,9,3,0,0,29,0,0,7])}
+    coef3 = {note[i]:coef for i, coef in enumerate([4,0,2,0,0,5,15,6,4,5,5,2,0,0,3,0,0,0,20,20,7])}
+
+    moys = []  #Initialisation d'une liste vide
     moy = 0     #Initialisation de la variable moy qui servira à stocker temporairement la moyenne
     c1 = 0     #premier compteur qui contiendra la somme des coefficients dans coef1
     c2 = 0     #second compteur qui contiendra la somme des coefficients dans coef2
-    c3 = 0     #troisième compteur qui contiendra la somme des coefficients dans coef3
+    c3 = 0     #troisième compteur qui contiendra la somme des coefficients dans coef1
 
-    #Première moyenne
-    for i in range(len(note)):     #boucle de 0 à la longueur de la liste note-1
-        moy += note[i] * coef1[i]     #somme du produit entre les notes et les coefficients de coef1
-        c1 += coef1[i]     #somme des coefficients
-    moys.append(moy/c1)     #on fait le calcul de la moyenne et on l'ajoute à la liste moys
-    moy=0
-    #Deuxième moyenne
-    for j in range(len(note)):
-        moy += note[j] * coef2[j]
-        c2 += coef2[j]
+    # Première moyenne
+    for note, coef in coef1.items():
+        moy += note * coef
+        c1 += coef
+    moys.append(moy/c1)
+    moy = 0
+
+    # Deuxième moyenne
+    for note, coef in coef2.items():
+        moy += note * coef
+        c2 += coef
     moys.append(moy/c2)
-    moy=0
-    #Troisième moyenne
-    for k in range(len(note)):
-        moy += note[k] * coef3[k]
-        c3 += coef3[k]
+    moy = 0
+
+    # Troisième moyenne
+    for note, coef in coef3.items():
+        moy += note * coef
+        c3 += coef
     moys.append(moy/c3)
+
     print(moys)
+
 calculUE()
