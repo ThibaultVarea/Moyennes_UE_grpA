@@ -1,12 +1,18 @@
 ### -----
 ### Attention: ce code assume qu'il y a autant de coefficients que de notes, sinon le code ne fonctionne pas
+
+#Imports
+import matplotlib as plt10
+
+import numpy as np
+
 def calculUE():
     #Liste des matières
     matiere = [f"R{i}" for i in range(101, 116)] + [f"SAE{j}" for j in range(11, 17)]
     note = [float(input(f"Quelle est la note pour {elt} ?")) for elt in matiere]
 
     #Dictionnaires note:coefficient
-    coef1 = {note[i]:coef for i, coef in enumerate([10,10,7,7,0,5,0,6,0,5,4,2,5,5,0,20,20,0,0,0,7])}     #On utilise enumerate et on y met directement les coefficients
+    coef1 = {note[i]:coef for i, coef in enumerate([10,10,7,7,0,5,0,6,0,5,4,2,5,5,0,20,20,0,0,0,7])}
     coef2 = {note[i]:coef for i, coef in enumerate([4,0,2,8,6,0,0,0,0,5,5,2,9,9,3,0,0,29,0,0,7])}
     coef3 = {note[i]:coef for i, coef in enumerate([4,0,2,0,0,5,15,6,4,5,5,2,0,0,3,0,0,0,20,20,7])}
 
@@ -23,7 +29,7 @@ def calculUE():
     moys.append(moy/c1)
     moy = 0
 
-    # Deuxième moyenne
+    #Deuxième moyenne
     for note, coef in coef2.items():
         moy += note * coef
         c2 += coef
@@ -36,6 +42,52 @@ def calculUE():
         c3 += coef
     moys.append(moy/c3)
 
-    print(moys)
+    # -----
+    
+    #Appreciation
+    
+    appreciation = ""
+    compteur = 0
+    
+    for note in moys:
+        if moys < 10:
+            compteur += 1
+    
+    if compteur = 1:
+        appreciation += "l'année de BUT 1 n'est pas validée mais le passage en BUT 2 est autorisé. Il faudra alors impérativement valider cette dernière UE en BUT 2 (au niveau 2, ce qui validera automatiquement le niveau 1 )"
+    
+    elif compteur = 2:
+        appreciation += "l'année n'est pas validée et le passage en BUT 2 n'est pas autorisé. Un redoublement peut-être proposé à l'appréciation du conseil des enseignants."
+    
+    else:
+        appreciation += "l'année est validée et le passage en BUT 2 est autorisé"
+        
+    print(appreciation)
+
+    #Visualisation graphique
+    plt.figure(figsize=(9, 5))
+
+    UEs = ["UE 1", "UE 2", "UE 3"]
+
+    barres = plt.bar(UEs, moys, color="green", width=0.5)
+
+    #Ligne de validation à y=10
+    plt.axhline(y=10, color="red", linestyle="dashdot", label="Moyenne")
+
+    # Affichage des moyennes
+    plt.text(0, moys[0] + 0.3, f"{moys[0]:.2f}", ha="center")
+    plt.text(1, moys[1] + 0.3, f"{moys[1]:.2f}", ha="center")
+    plt.text(2, moys[2] + 0.3, f"{moys[2]:.2f}", ha="center")
+
+    #Affichage du titre et des axes x et y
+    plt.title("Moyennes des trois UE")
+    plt.xlabel("UEs")
+    plt.ylabel("Moyenne /20")
+
+    plt.ylim(0, 20)
+    plt.legend()
+    plt.grid(axis="y", alpha=0.3)
+
+    plt.show()
 
 calculUE()
